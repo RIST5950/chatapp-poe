@@ -84,11 +84,5 @@ public class Login {
                 && EnteredUsername.equals(username) && EnteredPassword.equals(password);
         return LastLoginSucessful;
     }
-    public String returnloginstatus (){ 
-    
-        if(LastLoginSucessful){
-          return "Welcome " + firstName + " " + lastName + " Its great to see you.";
-        }
-        return "Username or Password Incorrect, please try again.";
-    }
+   
 }   
