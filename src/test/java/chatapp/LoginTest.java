@@ -115,7 +115,13 @@ public class LoginTest {
         assertEquals("Welcome Rahul Desai Its great to see you.", login.returnloginstatus());
     }
 
-    
+    @Test
+    public void testReturnLoginStatus_failed() {
+        login.SetUsername("kyl_1");
+        login.SetPassword("Ch&&sec@ke99!");
+        login.loginUser("kyl_1", "WrongPass1!");
+        assertEquals("Username or Password Incorrect, please try again.", login.returnloginstatus());
+    }
 
    
 }
