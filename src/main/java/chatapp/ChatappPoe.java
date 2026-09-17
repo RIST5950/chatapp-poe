@@ -32,12 +32,12 @@ public class ChatappPoe {
         
         System.out.println("\n ++= Chat App Login =++");
         System.out.println("Enter Username: ");
-        String LiU = input.nextLine(); // LiU is Log IN Username
+        String logininusername = input.nextLine(); // LiU is Log IN Username
         System.out.println("Enter Password: "); // LiP = Login Password
-        String LiP = input.nextLine();
-        login.loginUser(LiU, LiP);
+        String Loginpasword = input.nextLine();
+        login.loginUser(logininusername, Loginpasword );
         System.out.println(login.returnloginstatus());
-        
+       
         input.close();
          
     }
