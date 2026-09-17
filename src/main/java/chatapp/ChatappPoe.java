@@ -27,7 +27,8 @@ public class ChatappPoe {
         System.out.println("Enter a password (8 + characters, a Capital letter, a Number, a Special Character): ");
         login.SetPassword(input.nextLine());
         System.out.println("Enter a SA cell number, e.g +27662431701");
-       
+        login.SetCellnumber(input.nextLine());
+        System.out.println(login.registerUser());
         
         System.out.println("\n ++= Chat App Login =++");
         System.out.println("Enter Username: ");
