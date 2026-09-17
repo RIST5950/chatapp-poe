@@ -14,11 +14,12 @@ public class Login {
     private String username;
     private String password;
     private String CellPhoneNumber; 
-    private boolean LastLoginSucessful; 
+    private boolean LastLoginSucessful; // remebers the result for the last login attepmt status 
     
+    // Setter Methods - allows outside classes to store values 
     public Login(){}
     public void SetFristname (String firstName){ 
-    this.firstName = firstName;
+    this.firstName = firstName; 
     }
     public void SetLastname (String lastName){  
     this.lastName = lastName; 
@@ -32,12 +33,13 @@ public class Login {
     public void SetCellnumber (String SetPhoneNumber){ 
     this.CellPhoneNumber = SetPhoneNumber; 
     }
+    //Getter: allows outside classes to read the stored usename
     public String GetUsername (){ 
     return username; 
     }
     public boolean CheckUsername (String username){
     
-        if (username == null){
+        if (username == null){ // prvents a crash if nothing was entered 
           return false;
         }
         return username.contains("_")&& username.length() <=5;
@@ -46,7 +48,7 @@ public class Login {
      if(password == null || password.length() < 8) {
      return false; 
      }
-     boolean hasCapital = password.matches(".*[A-Z].*"); 
+     boolean hasCapital = password.matches(".*[A-Z].*"); // conditions for the password 
      boolean hasDigital = password.matches(".*[0-9].*"); 
      boolean hasSpecial = password.matches(".*[^a-zA-Z0-9].*"); 
      return hasCapital && hasDigital && hasSpecial;
@@ -64,12 +66,12 @@ public class Login {
                    "username contains an underscore and isn't more than 5" +
                    "Characters in lenght"; 
            }
-           if (!CheckPasswordcomplexity(password)){
+           if (!CheckPasswordcomplexity(password)){ // checks passowrd comlpexity 
            return "Your Password isn't correctly formmated; please ensure that your " + 
                    "password contains at least 8 characters" +
                    "A Capital letter, A number and a special Character";
            }
-           if (!CheckCellPhoneNumber(CellPhoneNumber)) {
+           if (!CheckCellPhoneNumber(CellPhoneNumber)) { // checks cell phone number 
            return "Cell Number is incorrectly formatted or dosen't cointain an international" +
                     "code, please correct the number and try again";
            }

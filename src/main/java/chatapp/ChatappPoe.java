@@ -15,11 +15,11 @@ public class ChatappPoe {
     public static void main(String[] args){
     
         Scanner input = new Scanner(System.in);
-        Login login = new Login();
+        Login login = new Login(); // Calling the login class 
          
         System.out.println("+== Chat App Registration ==+");
         System.out.println("Enter your first name: ");
-        login.SetFristname(input.nextLine());
+        login.SetFristname(input.nextLine()); 
         System.out.println("Enter your Last name: ");
         login.SetLastname(input.nextLine());
         System.out.println("Enter a username (must contain '_' and be 5 Charaters or less): ");
@@ -28,7 +28,7 @@ public class ChatappPoe {
         login.SetPassword(input.nextLine());
         System.out.println("Enter a SA cell number, e.g +27662431701");
         login.SetCellnumber(input.nextLine());
-        System.out.println(login.registerUser());
+        System.out.println(login.registerUser()); // registratin of user successfull 
         
         System.out.println("\n ++= Chat App Login =++");
         System.out.println("Enter Username: ");

@@ -27,32 +27,32 @@ public class LoginTest {
     
     }
    @Test
-   public void TestCheckUsername_corretlyFormatted(){   
+   public void TestCheckUsername_corretlyFormatted(){   // checks if user name meets the requrements 
     assertTrue(login.CheckUsername("kyl_1"));
    }
    @Test
-   public void TestCheckUsername_incorrectlyFormatted (){
+   public void TestCheckUsername_incorrectlyFormatted (){ // tests is a incorrectly formatted username is added 
     assertFalse(login.CheckUsername("kyle!!!!"));
    }
    @Test
-   public void TestCellphonenumber_meetsRequirements(){
+   public void Testpasswordcomplexity_meetsRequirements(){  // tests password strength lodgic is successful 
      assertTrue(login.CheckPasswordcomplexity("Ch&&sec@ke99!"));
    }
    @Test
-    public void testCellphonenumber_doesNotMeetRequirements() {
+    public void Testpasswordcomplexity_doesNotMeetRequirements() { // test password strength, en enterd incorrectly 
         assertFalse(login.CheckPasswordcomplexity("password"));
     }
    @Test
-    public void testCheckCellphonenumber_correctlyFormatted() {
+    public void testCheckCellphonenumber_correctlyFormatted() { // tests if the phone number is valid 
         assertTrue(login.CheckCellPhoneNumber("+27838968976"));
     }
 
    @Test
-    public void testCheckCellphonenumber_incorrectlyFormatted() {
+    public void testCheckCellphonenumber_incorrectlyFormatted() { // tests an incorrect phone number 
         assertFalse(login.CheckCellPhoneNumber("08966553"));
     }
        @Test
-    public void testRegisterUser_usernameIncorrectlyFormatted() {
+    public void testRegisterUser_usernameIncorrectlyFormatted() { // checks the whole username 
         login.SetUsername("kyle!!!!!!");
         login.SetPassword("Ch&&sec@ke99!");
         login.SetCellnumber("+27838968976");
@@ -63,7 +63,7 @@ public class LoginTest {
     }
 
     @Test
-    public void testRegisterUser_passwordDoesNotMeetRequirements() {
+    public void testRegisterUser_passwordDoesNotMeetRequirements() { // testes the whole password 
         login.SetUsername("kyl_1");
         login.SetPassword("password");
         login.SetCellnumber("+27838968976");
@@ -74,7 +74,7 @@ public class LoginTest {
     }
 
     @Test
-    public void testRegisterUser_cellPhoneIncorrectlyFormatted() {
+    public void testRegisterUser_cellPhoneIncorrectlyFormatted() { // tests if code will runwith incorrect formatted phone numbers 
         login.SetUsername("kyl_1");
         login.SetPassword("Ch&&sec@ke99!");
         login.SetCellnumber("08966553");
@@ -95,20 +95,20 @@ public class LoginTest {
         );
     }
         @Test
-    public void testLoginUser_successful() {
+    public void testLoginUser_successful() {// tests a successfull username
         login.SetUsername("kyl_1");
         login.SetPassword("Ch&&sec@ke99!");
         assertTrue(login.loginUser("kyl_1", "Ch&&sec@ke99!"));
     }
 
     @Test
-    public void testLoginUser_failed() {
+    public void testLoginUser_failed() { // tests a unsccessfull username 
         login.SetUsername("kyl_1");
         login.SetPassword("Ch&&sec@ke99!");
         assertFalse(login.loginUser("kyl_1", "WrongPass1!"));
     }
         @Test
-    public void testReturnLoginStatus_successful() {
+    public void testReturnLoginStatus_successful() { 
         login.SetUsername("kyl_1");
         login.SetPassword("Ch&&sec@ke99!");
         login.loginUser("kyl_1", "Ch&&sec@ke99!");
