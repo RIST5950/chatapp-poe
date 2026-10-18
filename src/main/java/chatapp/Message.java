@@ -6,6 +6,10 @@ package chatapp;
 import java.util.Random; // generates random message ID's
 import java.util.regex.Pattern;
 import java.util.ArrayList;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import java.io.FileWriter;
+import java.io.IOException;
 /**
  *
  * @author rahul
@@ -18,6 +22,7 @@ public class Message {
     private String messageText;
     private String messageHash;
     private static ArrayList<Message> sentMessages = new ArrayList<>();
+    private static ArrayList<Message> storedMessages = new ArrayList<>(); 
     
     public String getMessageID(){return messageID;}
     public void setMessageID (String messageID){this.messageID = messageID;}
@@ -68,9 +73,8 @@ public class Message {
     public String printMessages(){
     String output = "";
         for (Message m : sentMessages) {
-            output = output + "Mesage ID: " + m.getMessageID() + 
-                    "\n" + "Message Hash: " + m.getMessageHash() + 
-                    "\n" + m.createMessageHash() + "\n" + 
+            output = output + "Message ID: " + m.getMessageID() + 
+                    "\n" + "Message Hash: " + m.getMessageHash() + "\n" + 
                     "Recipient: " + m.getrecipient() + "\n" +
                     "Message: " + m.getMessageText() + "\n\n";
             
@@ -78,5 +82,29 @@ public class Message {
         return output;
     }
     public int returnTotalMessages(){return sentMessages.size();}
+    public void storedMessage (){
+     storedMessages.add(this);
+     Gson gson = new GsonBuilder().setPrettyPrinting().create();
+     try (FileWriter  writer = new FileWriter("messages.json")){
+     gson.toJson(storedMessages, writer);
+     }
+     catch( IOException e){
+         System.out.println("Could'nt store message: " + e.getMessage());
+     }
+    }
+    public String SentMessage(int choice){
+    createMessageHash();
+        if (choice == 1) {
+          sentMessages.add(this);
+          return "Message Sucessfully sent.";
+        }
+        else if (choice == 2) {
+            return "Press 0 to delete the message.";
+        }
+        else if (choice == 3) {
+            return  "Message Suessfully stored.";
+        }
+        return "Invalid option.";
+    }
 }
 
