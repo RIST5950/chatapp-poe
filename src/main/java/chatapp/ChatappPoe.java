@@ -47,7 +47,7 @@ public class ChatappPoe {
           input.close();
     }
     public static void runQuickChat (Scanner input){
-        System.out.println("\n Welcome to QuickChat !!");
+        System.out.println("\n Welcome to QuickChat.");
         System.out.println("How many messages do you wish to enter?");
         int numMessages = Integer.parseInt(input.nextLine());
         int messagesEntered = 0;
@@ -59,8 +59,66 @@ public class ChatappPoe {
             choice = Integer.parseInt(input.nextLine());
         
             if (choice == 1) {
+                if (messagesEntered >= numMessages) {
+                    System.out.println("You have already enterd all " + numMessages + "messages");
+                }
+                else {
+                    sendMessages(input, messagesEntered, numMessages);
+                    messagesEntered = numMessages;
+                    System.out.println("\nTotal number of messages sent: " + Message.returnTotalMessages());
+                }
                 
+            }
+            else if (choice == 2) {
+                System.out.println("Coming Soon.");
+            } else if (choice == 3) {
+                System.out.println("Goodbye.");
+            } else {
+                System.out.println("Invalid option, please choose 1, 2 or 3.");
             }
         }
     }
+        public static void sendMessages(Scanner input, int startIndex, int numMessages) {
+        for (int i = startIndex; i < numMessages; i++) {
+            System.out.println("\n--- Message " + (i + 1) + " of " + numMessages + " ---");
+
+            Message msg = null;
+            String recipientResult = "";
+            while (!recipientResult.contains("succes")) {
+                System.out.println("Enter the recipient cell number (e.g. +27718693002):");
+                msg = new Message(i, input.nextLine(), "");
+                recipientResult = msg.checkrecipientCell();
+                System.out.println(recipientResult);
+            }
+
+            String lengthResult = "";
+            while (!lengthResult.contains("ready to send")) {
+                System.out.println("Enter your message (max 250 characters):");
+                msg = new Message(i, msg.getrecipient(), input.nextLine());
+                lengthResult = msg.checkMessageLenght();
+                System.out.println(lengthResult);
+            }
+
+            System.out.println("Message ID generated: " + msg.getMessageID());
+            System.out.println("1) Send Message");
+            System.out.println("2) Disregard Message");
+            System.out.println("3) Store Message to send later");
+            int option = Integer.parseInt(input.nextLine());
+
+            System.out.println(msg.SentMessage(option));
+
+            if (option == 1) {
+                System.out.println("Message ID: " + msg.getMessageID());
+                System.out.println("Message Hash: " + msg.getMessageHash());
+                System.out.println("Recipient: " + msg.getrecipient());
+                System.out.println("Message: " + msg.getMessageText());
+            } else if (option == 2) {
+                if (input.nextLine().equals("0")) {
+                    System.out.println("Message deleted.");
+                }
+            }
+        }
+    }
+    
+    
 }

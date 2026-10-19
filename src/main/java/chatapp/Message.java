@@ -46,21 +46,20 @@ public class Message {
     public boolean checkMessageID(){
        return messageID != null && messageID.length() <= 10; 
     }
-    public String checkrecipientCell(){
+   public String checkrecipientCell(){
         if (recipient != null && Pattern.matches("^\\+27[0-9]{1,10}$", recipient)) {
-            return "Cell number succesfully captureed.";
+            return "Cell phone number successfully captured.";
         }
-        return "Cell phone number is inncorrectaly formatted or dose not contain an international code."
-                + "Please enter a valid number and try again!!"; 
+        return "Cell phone number is incorrectly formatted or does not contain an international code. Please correct the number and try again.";
     }
     
-    public String checkMessageLenght(){
+   public String checkMessageLenght(){
         if (messageText.length() <= 250) {
-            return "Message ready to send";
+            return "Message ready to send.";
         }
         int extra = messageText.length() - 250;
-        return "Message exeeds 250 characters by"+ extra + "pls reduce the size";
-    } 
+        return "Message exceeds 250 characters by " + extra + "; please reduce the size.";
+    }
     public String createMessageHash(){
     String[]words = messageText.trim().split("\\s+");
     String first = words[0].replaceAll("[^a-zA-Z0-9]", "");
@@ -92,17 +91,16 @@ public class Message {
          System.out.println("Could'nt store message: " + e.getMessage());
      }
     }
-    public String SentMessage(int choice){
-    createMessageHash();
+     public String SentMessage(int choice){
+        createMessageHash();
         if (choice == 1) {
-          sentMessages.add(this);
-          return "Message Sucessfully sent.";
-        }
-        else if (choice == 2) {
+            sentMessages.add(this);
+            return "Message successfully sent.";
+        } else if (choice == 2) {
             return "Press 0 to delete the message.";
-        }
-        else if (choice == 3) {
-            return  "Message Suessfully stored.";
+        } else if (choice == 3) {
+            storedMessage();
+            return "Message successfully stored.";
         }
         return "Invalid option.";
     }
