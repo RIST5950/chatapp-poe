@@ -1,75 +1,76 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- */
-
 package chatapp;
 
 import java.util.Scanner;
 
-/**
- *
- * @author rahul
- */
 public class ChatappPoe {
-    
-    public static void main(String[] args){
-    
+
+    public static void main(String[] args) {
+
         Scanner input = new Scanner(System.in);
-        Login login = new Login(); // Calling the login class 
-         
+        Login login = new Login();
+
         System.out.println("+== Chat App Registration ==+");
         System.out.println("Enter your first name: ");
-        login.SetFristname(input.nextLine()); 
-        System.out.println("Enter your Last name: ");
+        login.SetFristname(input.nextLine());
+        System.out.println("Enter your last name: ");
         login.SetLastname(input.nextLine());
-        System.out.println("Enter a username (must contain '_' and be 5 Charaters or less): ");
+        System.out.println("Enter a username (must contain '_' and be 5 characters or less): ");
         login.SetUsername(input.nextLine());
-        System.out.println("Enter a password (8 + characters, a Capital letter, a Number, a Special Character): ");
+        System.out.println("Enter a password (8+ characters, a capital letter, a number, a special character): ");
         login.SetPassword(input.nextLine());
-        System.out.println("Enter a SA cell number, e.g +27662431701");
+        System.out.println("Enter a SA cell number, e.g. +27662431701");
         login.SetCellnumber(input.nextLine());
-        System.out.println(login.registerUser()); // registratin of user successfull 
-        
-        System.out.println("\n ++= Chat App Login =++");
-        System.out.println("Enter Username: ");
-        String logininusername = input.nextLine(); // LiU is Log IN Username
-        System.out.println("Enter Password: "); // LiP = Login Password
-        String Loginpasword = input.nextLine();
-//        login.loginUser(logininusername, Loginpasword );
-//        System.out.println(login.returnloginstatus());
-//       
-//        input.close();
-         boolean LoggedIn = login.loginUser(logininusername, Loginpasword);
-          System.out.println(login.returnloginstatus());
-          if (LoggedIn) {
+        System.out.println(login.registerUser());
+
+        System.out.println("\n++= Chat App Login =++");
+        System.out.println("Enter username: ");
+        String loginUsername = input.nextLine();
+        System.out.println("Enter password: ");
+        String loginPassword = input.nextLine();
+
+        boolean loggedIn = login.loginUser(loginUsername, loginPassword);
+        System.out.println(login.returnloginstatus());
+
+        if (loggedIn) {
             runQuickChat(input);
         }
-          input.close();
+        input.close();
     }
-    public static void runQuickChat (Scanner input){
-        System.out.println("\n Welcome to QuickChat.");
+
+    // Reads a whole number and keeps asking until the user types a valid one
+    public static int readNumber(Scanner input) {
+        while (true) {
+            try {
+                return Integer.parseInt(input.nextLine().trim());
+            } catch (NumberFormatException e) {
+                System.out.println("Please enter a whole number:");
+            }
+        }
+    }
+
+    public static void runQuickChat(Scanner input) {
+        System.out.println();
+        System.out.println("Welcome to QuickChat.");
         System.out.println("How many messages do you wish to enter?");
-        int numMessages = Integer.parseInt(input.nextLine());
+        int numMessages = readNumber(input);
         int messagesEntered = 0;
         int choice = 0;
-        while (choice != 3){
-            System.out.println("\n1. Send messages. ");
-            System.out.println("2. Show recently sent messages.");
-            System.out.println("3. Quit");
-            choice = Integer.parseInt(input.nextLine());
-        
+
+        while (choice != 3) {
+            System.out.println("\n1) Send Messages");
+            System.out.println("2) Show recently sent messages");
+            System.out.println("3) Quit");
+            choice = readNumber(input);
+
             if (choice == 1) {
                 if (messagesEntered >= numMessages) {
-                    System.out.println("You have already enterd all " + numMessages + "messages");
-                }
-                else {
+                    System.out.println("You have already entered all " + numMessages + " messages.");
+                } else {
                     sendMessages(input, messagesEntered, numMessages);
                     messagesEntered = numMessages;
                     System.out.println("\nTotal number of messages sent: " + Message.returnTotalMessages());
                 }
-                
-            }
-            else if (choice == 2) {
+            } else if (choice == 2) {
                 System.out.println("Coming Soon.");
             } else if (choice == 3) {
                 System.out.println("Goodbye.");
@@ -78,24 +79,25 @@ public class ChatappPoe {
             }
         }
     }
-        public static void sendMessages(Scanner input, int startIndex, int numMessages) {
+
+    public static void sendMessages(Scanner input, int startIndex, int numMessages) {
         for (int i = startIndex; i < numMessages; i++) {
             System.out.println("\n--- Message " + (i + 1) + " of " + numMessages + " ---");
 
             Message msg = null;
             String recipientResult = "";
-            while (!recipientResult.contains("succes")) {
+            while (!recipientResult.equals("Cell phone number successfully captured.")) {
                 System.out.println("Enter the recipient cell number (e.g. +27718693002):");
                 msg = new Message(i, input.nextLine(), "");
-                recipientResult = msg.checkrecipientCell();
+                recipientResult = msg.checkRecipientCell();
                 System.out.println(recipientResult);
             }
 
             String lengthResult = "";
-            while (!lengthResult.contains("ready to send")) {
+            while (!lengthResult.equals("Message ready to send.")) {
                 System.out.println("Enter your message (max 250 characters):");
-                msg = new Message(i, msg.getrecipient(), input.nextLine());
-                lengthResult = msg.checkMessageLenght();
+                msg = new Message(i, msg.getRecipient(), input.nextLine());
+                lengthResult = msg.checkMessageLength();
                 System.out.println(lengthResult);
             }
 
@@ -103,22 +105,20 @@ public class ChatappPoe {
             System.out.println("1) Send Message");
             System.out.println("2) Disregard Message");
             System.out.println("3) Store Message to send later");
-            int option = Integer.parseInt(input.nextLine());
+            int option = readNumber(input);
 
             System.out.println(msg.SentMessage(option));
 
             if (option == 1) {
                 System.out.println("Message ID: " + msg.getMessageID());
                 System.out.println("Message Hash: " + msg.getMessageHash());
-                System.out.println("Recipient: " + msg.getrecipient());
+                System.out.println("Recipient: " + msg.getRecipient());
                 System.out.println("Message: " + msg.getMessageText());
             } else if (option == 2) {
-                if (input.nextLine().equals("0")) {
+                if (input.nextLine().trim().equals("0")) {
                     System.out.println("Message deleted.");
                 }
             }
         }
     }
-    
-    
 }
