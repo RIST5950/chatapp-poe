@@ -41,6 +41,26 @@ public class ChatappPoe {
 //        input.close();
          boolean LoggedIn = login.loginUser(logininusername, Loginpasword);
           System.out.println(login.returnloginstatus());
-          
+          if (LoggedIn) {
+            runQuickChat(input);
+        }
+          input.close();
+    }
+    public static void runQuickChat (Scanner input){
+        System.out.println("\n Welcome to QuickChat !!");
+        System.out.println("How many messages do you wish to enter?");
+        int numMessages = Integer.parseInt(input.nextLine());
+        int messagesEntered = 0;
+        int choice = 0;
+        while (choice != 3){
+            System.out.println("\n1. Send messages. ");
+            System.out.println("2. Show recently sent messages.");
+            System.out.println("3. Quit");
+            choice = Integer.parseInt(input.nextLine());
+        
+            if (choice == 1) {
+                
+            }
+        }
     }
 }
