@@ -70,7 +70,7 @@ public class Message {
     return messageHash;
     
     }
-    public String printMessages(){
+    public static String printMessages(){
     String output = "";
         for (Message m : sentMessages) {
             output = output + "Message ID: " + m.getMessageID() + 
@@ -81,7 +81,7 @@ public class Message {
         }
         return output;
     }
-    public int returnTotalMessages(){return sentMessages.size();}
+    public static int returnTotalMessages(){return sentMessages.size();}
     public void storedMessage (){
      storedMessages.add(this);
      Gson gson = new GsonBuilder().setPrettyPrinting().create();
