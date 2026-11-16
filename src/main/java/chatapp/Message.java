@@ -17,6 +17,10 @@ public class Message {
     private String messageHash;
     private static ArrayList<Message> sentMessages = new ArrayList<>();
     private static ArrayList<Message> storedMessages = new ArrayList<>();
+    private String sender;
+    private static ArrayList<Message> disregardedMessages = new ArrayList<>();
+    private static ArrayList<String> messageHashes = new ArrayList<>();
+    private static ArrayList<String> messageIDs = new ArrayList<>();
 
     public Message(int messageNumber, String recipient, String messageText) {
         this.messageNumber = messageNumber;
@@ -32,6 +36,9 @@ public class Message {
     public String getMessageHash() { return messageHash; }
     public String getRecipient() { return recipient; }
     public String getMessageText() { return messageText; }
+    public String getSender() { return sender; }
+    public void setSender(String sender) { this.sender = sender; }
+    
 
     public String generateMessageID() {
         Random random = new Random();
@@ -95,17 +102,23 @@ public class Message {
         }
     }
 
-    public String SentMessage(int choice) {
+        public String SentMessage(int choice) {
+        if (choice < 1 || choice > 3) {
+            return "Invalid option.";
+        }
         createMessageHash();
+        messageHashes.add(messageHash);
+        messageIDs.add(messageID);
+
         if (choice == 1) {
             sentMessages.add(this);
             return "Message successfully sent.";
         } else if (choice == 2) {
+            disregardedMessages.add(this);
             return "Press 0 to delete the message.";
-        } else if (choice == 3) {
-            storeMessage();
-            return "Message successfully stored.";
         }
-        return "Invalid option.";
+        storeMessage();
+        return "Message successfully stored.";
     }
+    
 }
