@@ -120,5 +120,22 @@ public class Message {
         storeMessage();
         return "Message successfully stored.";
     }
+            public String messageIDCreated() {
+        return "Message ID generated: " + messageID;
+    }
+
+    public static void clearSentMessages() {
+        sentMessages.clear();
+    }
+
+    // Empties every array so each unit test starts fresh
+    public static void clearAll() {
+        sentMessages.clear();
+        disregardedMessages.clear();
+        storedMessages.clear();
+        messageHashes.clear();
+        messageIDs.clear();
+    }
+    
     
 }
