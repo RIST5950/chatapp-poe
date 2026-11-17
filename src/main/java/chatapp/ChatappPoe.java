@@ -30,7 +30,7 @@ public class ChatappPoe {
         String loginPassword = input.nextLine();
 
         boolean loggedIn = login.loginUser(loginUsername, loginPassword);
-        System.out.println(login.returnloginstatus());
+                System.out.println(login.returnLoginStatus());
 
         // Messaging only unlocks after a successful login
         if (loggedIn) {
