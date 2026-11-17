@@ -21,6 +21,13 @@ public class Message {
     private String messageHash;
     private static ArrayList<Message> sentMessages = new ArrayList<>();
     private static ArrayList<Message> storedMessages = new ArrayList<>();
+        private static String storageFile = "messages.json";
+
+    public static void setStorageFile(String fileName) {
+        storageFile = fileName;
+    }
+        private Message() {
+    }
     private String sender;
     private static ArrayList<Message> disregardedMessages = new ArrayList<>();
     private static ArrayList<String> messageHashes = new ArrayList<>();
@@ -96,14 +103,18 @@ public class Message {
         return sentMessages.size();
     }
 
-    public void storeMessage() {
-        storedMessages.add(this);
+        public static void saveStoredMessages() {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        try (FileWriter writer = new FileWriter("messages.json")) {
+        try (FileWriter writer = new FileWriter(storageFile)) {
             gson.toJson(storedMessages, writer);
         } catch (IOException e) {
-            System.out.println("Couldn't store message: " + e.getMessage());
+            System.out.println("Couldn't save messages: " + e.getMessage());
         }
+    }
+
+    public void storeMessage() {
+        storedMessages.add(this);
+        saveStoredMessages();
     }
 
         public String SentMessage(int choice) {
