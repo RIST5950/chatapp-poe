@@ -152,5 +152,23 @@ public class Message {
         messageIDs.clear();
     }
     
+        public static void loadStoredMessages() {
+        File file = new File(storageFile);
+        if (!file.exists()) {
+            return;
+        }
+        Gson gson = new Gson();
+        try (FileReader reader = new FileReader(file)) {
+            Type listType = new TypeToken<ArrayList<Message>>() {}.getType();
+            ArrayList<Message> loaded = gson.fromJson(reader, listType);
+            storedMessages.clear();
+            if (loaded != null) {
+                storedMessages.addAll(loaded);
+            }
+        } catch (IOException e) {
+            System.out.println("Couldn't read stored messages: " + e.getMessage());
+        }
+    }
+        
     
 }
