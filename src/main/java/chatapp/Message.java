@@ -170,5 +170,92 @@ public class Message {
         }
     }
         
+        // Combines the sent and stored arrays so the search tools can look in both
+    private static ArrayList<Message> allMessages() {
+        ArrayList<Message> all = new ArrayList<>(sentMessages);
+        all.addAll(storedMessages);
+        return all;
+    }
+
+    public static ArrayList<Message> getSentMessages() {
+        return new ArrayList<>(sentMessages);
+    }
+
+    public static ArrayList<Message> getStoredMessages() {
+        return new ArrayList<>(storedMessages);
+    }
     
+        public static String displaySenderAndRecipient() {
+        if (storedMessages.isEmpty()) {
+            return "No stored messages.";
+        }
+        String output = "";
+        for (Message m : storedMessages) {
+            String who = (m.getSender() == null) ? "Unknown" : m.getSender();
+            output = output + "Sender: " + who + " | Recipient: " + m.getRecipient() + "\n";
+        }
+        return output;
+    }
+        
+            public static Message findLongestStoredMessage() {
+        Message longest = null;
+        for (Message m : storedMessages) {
+            if (longest == null || m.getMessageText().length() > longest.getMessageText().length()) {
+                longest = m;
+            }
+        }
+        return longest;
+    }
+                public static Message findByMessageID(String id) {
+        for (Message m : allMessages()) {
+            if (id.equals(m.getMessageID())) {
+                return m;
+            }
+        }
+        return null;
+    }
+                    public static ArrayList<Message> findByRecipient(String recipient) {
+        ArrayList<Message> matches = new ArrayList<>();
+        for (Message m : allMessages()) {
+            if (recipient.equals(m.getRecipient())) {
+                matches.add(m);
+            }
+        }
+        return matches;
+    }
+                        public static String deleteByHash(String hash) {
+        Message target = null;
+        for (Message m : allMessages()) {
+            if (m.getMessageHash() != null && m.getMessageHash().equalsIgnoreCase(hash)) {
+                target = m;
+                break;
+            }
+        }
+        if (target == null) {
+            return "No message found with that hash.";
+        }
+        sentMessages.remove(target);
+        boolean wasStored = storedMessages.remove(target);
+        messageHashes.remove(target.getMessageHash());
+        messageIDs.remove(target.getMessageID());
+        if (wasStored) {
+            saveStoredMessages();
+        }
+        return "Message: \"" + target.getMessageText() + "\" successfully deleted.";
+    }
+                            public static String displayReport(ArrayList<Message> list) {
+        if (list.isEmpty()) {
+            return "No messages to report.";
+        }
+        String report = "";
+        for (Message m : list) {
+            report = report + "Message ID: " + m.getMessageID() + "\n"
+                    + "Message Hash: " + m.getMessageHash() + "\n"
+                    + "Sender: " + (m.getSender() == null ? "Unknown" : m.getSender()) + "\n"
+                    + "Recipient: " + m.getRecipient() + "\n"
+                    + "Message: " + m.getMessageText() + "\n\n";
+        }
+        return report;
+    }
+                            
 }
