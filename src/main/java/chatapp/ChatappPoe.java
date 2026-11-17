@@ -47,8 +47,10 @@ public class ChatappPoe {
             }
         }
     }
+    
 
     public static void runQuickChat(Scanner input) {
+        Message.loadStoredMessages();
         System.out.println();
         System.out.println("Welcome to QuickChat.");
         System.out.println("How many messages do you wish to enter?");
